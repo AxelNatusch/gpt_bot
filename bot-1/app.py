@@ -20,7 +20,7 @@ def get_system_prompt(scenario):
     elif scenario == "5":
         return chatbot_scenarios.markdown_beautifier
     elif scenario == "6":
-        return "placeholder2"
+        return "placeholder"
 
 
 @app.route("/")
