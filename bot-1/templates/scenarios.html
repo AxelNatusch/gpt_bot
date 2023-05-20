@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scenarios</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl7/1L_dstPt3HV5HzF6Gvk/e3s4z4Xl5arQlQ6J8e" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            margin: 2rem;
+        }
+
+        #chat-container {
+            white-space: pre-wrap;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .message-label {
+            font-weight: bold;
+            margin-bottom: 0.2em;
+        }
+
+        .message {
+            display: block;
+            margin-bottom: 1em;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .user .message {
+            background-color: #d2e8ff;
+            color: #333;
+        }
+
+        .assistant .message {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-center mb-4">Scenarios</h1>
+    {% if scenario is not defined %}
+    <p class="text-center">Select a scenario:</p>
+    <ul class="list-group list-group-horizontal mx-auto mb-4" style="max-width: 400px;">
+        <li class="list-group-item text-center"><a href="/scenario/1">Email Rewriting (German)</a></li>
+        <li class="list-group-item text-center"><a href="/scenario/2">Python Code Assistant</a></li>
+        <li class="list-group-item text-center"><a href="/scenario/3">SQL Code Assistant</a></li>
+        <li class="list-group-item text-center"><a href="/scenario/4">Data Engineering Assistant</a></li>
+        <li class="list-group-item text-center"><a href="/scenario/5">Markdown Beautifier</a></li>
+    </ul>
+    {% else %}
+    <h2 class="text-center mb-4">Scenario {{ scenario }}</h2>
+    <form id="chat-form" class="mb-3">
+        <div class="mb-3">
+            <label for="user-input" class="form-label visually-hidden">User input</label>
+            <textarea id="user-input" class="form-control" rows="4" placeholder="Type your message..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+    <div id="chat-container" class="mb-3">
+        <!-- Chat messages will be appended here -->
+    </div>
+    <div class="text-center">
+        <button id="new-session-btn" class="btn btn-secondary">New Session</button>
+    </div>
+    {% endif %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+     const chatForm = document.getElementById('chat-form');
+     const userInput = document.getElementById('user-input');
+     const chatContainer = document.getElementById('chat-container');
+     const newSessionBtn = document.getElementById('new-session-btn');
+ 
+     chatForm.addEventListener('submit', async function (event) {
+         event.preventDefault();
+ 
+         const userMessage = userInput.value.trim();
+ 
+         if (userMessage === '') return;
+ 
+         appendMessage('user', userMessage);
+         userInput.value = '';
+ 
+         const response = await fetch('/chatbot', {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json',
+             },
+             body: JSON.stringify({
+                 user_input: userMessage,
+                 scenario: '{{ scenario }}',
+             }),
+         });
+ 
+         if (response.ok) {
+             const data = await response.json();
+             const assistantMessage = data.assistant_response;
+             appendMessage('assistant', assistantMessage);
+         } else {
+             console.error('Error: Chatbot request failed');
+         }
+     });
+ 
+     newSessionBtn.addEventListener('click', function () {
+         window.location.href = '/scenarios';
+     });
+ 
+     function appendMessage(role, content) {
+         const messageWrapper = document.createElement('div');
+         messageWrapper.className = role;
+ 
+         const messageLabel = document.createElement('p');
+         messageLabel.className = 'message-label';
+         messageLabel.textContent = role === 'user' ? 'User:' : 'Assistant:';
+         messageWrapper.appendChild(messageLabel);
+ 
+         const messageContent = document.createElement('div');
+         messageContent.className = 'message';
+         messageContent.textContent = content;
+         messageWrapper.appendChild(messageContent);
+ 
+         if (role === 'assistant') {
+             const copyButton = document.createElement('button');
+             copyButton.textContent = 'Copy';
+             copyButton.onclick = function () {
+                 copyToClipboard(content);
+             };
+             messageWrapper.appendChild(copyButton);
+         }
+ 
+         chatContainer.appendChild(messageWrapper);
+     }
+ 
+     function copyToClipboard(text) {
+         const textarea = document.createElement('textarea');
+         textarea.value = text;
+         document.body.appendChild(textarea);
+         textarea.select();
+         document.execCommand('copy');
+         document.body.removeChild(textarea);
+     }
+ });
+     </script>
+    <!-- Add Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-tQBvr/3vS4D1KBRl/3z3zMRpZ+CBMwybXh9J2By2gIkX24n8H9W7nuu3DqumuV7D" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+</body>
+</html>
