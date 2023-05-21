@@ -10,5 +10,8 @@
 - [x] Deploy the project to cloud run
 - [ ] implement langchain
 - [ ] build a better web interface
+  - [x] follow flask_tutorial and learn basics   
 - [x] create some scenarios
 - [ ] test limits
+
+
