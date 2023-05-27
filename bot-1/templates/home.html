@@ -1,0 +1,42 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- CONTENT WRAPPER -->
+<div id="content-wrapper">
+  <!-- HOME -->
+  {% include "homepage/home_home.html" %}
+  <!-- SERVICES -->
+  {% include "homepage/services_home.html" %}
+  <!-- WORK -->
+  {% include "homepage/work_home.html" %}
+  <!-- ABOUT -->
+  {% include "homepage/about_home.html" %}
+  <!-- REVIEWS -->
+  {% include "homepage/reviews_home.html" %}
+  <!-- BLOG -->
+  {% include "homepage/blog_home.html" %}
+  <!-- CONTACT -->
+  {% include "homepage/contact_home.html" %}
+
+  <!-- FOOTER -->
+  <footer class="py-5 px-lg-5">
+    <div class="container">
+      <div class="row gy-4 justify-content-between">
+        <div class="col-auto">
+          <p class="mb-0">© 2023 All Rights Reserved</p>
+        </div>
+        <div class="col-auto">
+          <div class="social-icons">
+            <a href="#"><i class="lab la-twitter"></i></a>
+            <a href="#"><i class="lab la-instagram"></i></a>
+            <a href="#"><i class="lab la-linkedin-in"></i></a>
+            <a href="#"><i class="lab la-github"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- //FOOTER -->
+</div>
+
+{% endblock %}
