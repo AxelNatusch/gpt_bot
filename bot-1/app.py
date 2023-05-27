@@ -30,12 +30,13 @@ def index():
 
 @app.route("/scenarios")
 def scenario():
-    return render_template("scenarios.html")
+    return render_template("gpt_home.html")
 
 
-@app.route("/scenario/<scenario>")
-def scenario_page(scenario):
-    return render_template("scenarios.html", scenario=scenario)
+@app.route("/chat")
+def chat():
+    scenario = request.args.get("scenario")
+    return render_template("chat.html", scenario=scenario)
 
 
 @app.route("/chatbot", methods=["POST"])

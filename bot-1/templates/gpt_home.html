@@ -1,0 +1,69 @@
+{% extends "base.html" %} {% block content %}
+<!-- CONTENT WRAPPER -->
+<div id="scenarios" class="full-height">
+  <div class="container">
+    <div class="row pb-4">
+      <div class="text-brand">
+        <h6 class="text-brand">Scenarios</h6>
+        <h1>Choose a Scenario to start a chat</h1>
+      </div>
+    </div>
+
+    <div class="row gy-4">
+      <div class="col-md-4">
+        <div class="service p-4 bg-base rounded-4 shadow-effect">
+          <h4>Business E-Mail Rewriting</h4>
+          <p>
+            This scenario is for rewriting business emails. The goal is to make
+            the email more concise, proffesional and without any grammatical
+            errors.
+          </p>
+          <button
+            type="button"
+            class="btn btn-brand"
+            onclick="window.location.href='/chat?scenario=business-email-rewriting'"
+          >
+            Start Chat
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="service p-4 bg-base rounded-4 shadow-effect">
+          <h4>Python Code Assistant</h4>
+          <p>
+            This scenario is for assisting in writing python code. The goal is
+            to help the user write python code by providing suggestions for
+            completing the code.
+          </p>
+          <button
+            type="button"
+            class="btn btn-brand"
+            onclick="window.location.href='/chat?scenario=python-code-assistant'"
+          >
+            Start Chat
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="service p-4 bg-base rounded-4 shadow-effect">
+          <h4>SQL Code Assistant</h4>
+          <p>
+            This scenario is for assisting in writing sql code. The goal is to
+            help the user write sql code by providing suggestions for completing
+            the code.
+          </p>
+          <button
+            type="button"
+            class="btn btn-brand"
+            onclick="window.location.href='/chat?scenario=sql-code-assistant'"
+          >
+            Start Chat
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
