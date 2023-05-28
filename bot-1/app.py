@@ -33,10 +33,13 @@ def scenario():
     return render_template("gpt_home.html")
 
 
-@app.route("/chat")
+@app.route("/chat", methods=["GET", "POST"])
 def chat():
     scenario = request.args.get("scenario")
-    return render_template("chat.html", scenario=scenario)
+    message = ""
+    if request.method == "POST":
+        message = request.form.get("user_message")
+    return render_template("chat.html", scenario=scenario, message=message)
 
 
 @app.route("/chatbot", methods=["POST"])
